@@ -181,7 +181,21 @@ python extract_embeddings.py
 📄 **Full Report & Presentation** → [`docs/`](./docs/)
 
 ---
+## 📸 Screenshots
 
+<p align="center">
+  <img src="screenshots/home.png" width="45%" alt="Home Dashboard">
+  <img src="screenshots/register.png" width="45%" alt="Register Page">
+</p>
+
+<p align="center">
+  <img src="screenshots/attendance-live.png" width="45%" alt="Live Attendance Marking">
+  <img src="screenshots/users-list.png" width="45%" alt="Users List">
+</p>
+
+<p align="center">
+  <img src="screenshots/retrain.png" width="45%" alt="Retrain Feature">
+</p>
 ## 🔮 Future Improvements
 
 - [ ] Upgrade to **MediaPipe** or **RetinaFace** for more robust face detection
