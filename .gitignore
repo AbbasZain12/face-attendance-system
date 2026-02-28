@@ -20,9 +20,14 @@ embeddings/
 *.pkl
 label_encoder.pkl
 attendance.csv
-*.jpg
-*.jpeg
-*.png
+
+# Images - only ignore user photos, keep screenshots
+data/**/*.jpg
+data/**/*.jpeg
+data/**/*.png
+database/**/*.png
+model/**/*.png
+embeddings/**/*.png
 
 # Logs & Temp
 *.log
