@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register User - Face Attendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .thumb {
+            width: 96px;
+            height: 96px;
+            object-fit: cover;
+            margin: 4px;
+            border: 2px solid #e5e7eb; /* border-gray-200 */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: transform 0.2s;
+        }
+        .thumb:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-800 text-white flex flex-col">
+            <div class="p-6 text-2xl font-bold border-b border-gray-700">FaceTrack</div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="/" class="flex items-center px-4 py-2 text-lg rounded-md hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Home
+                </a>
+                <a href="/register" class="flex items-center px-4 py-2 text-lg rounded-md bg-gray-700 font-semibold">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+                    Register User
+                </a>
+                 <a href="/attendance" class="flex items-center px-4 py-2 text-lg rounded-md hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    Mark Attendance
+                </a>
+                <a href="/manage_users" class="flex items-center px-4 py-2 text-lg rounded-md hover:bg-gray-700 transition-colors">
+                     <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    Manage & Retrain
+                </a>
+                <a href="/attendance_log" class="flex items-center px-4 py-2 text-lg rounded-md hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    Attendance Log
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8 overflow-y-auto">
+            <h1 class="text-4xl font-bold text-gray-800 mb-8">Register New User</h1>
+
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="mb-6">
+                    <label for="name" class="block text-lg font-medium text-gray-700 mb-2">User's Name</label>
+                    <input id="name" type="text" class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., Your Name">
+                </div>
+
+                <div class="flex items-center space-x-4 mb-6">
+                    <button id="start" class="px-5 py-2.5 font-medium bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Start Camera</button>
+                    <button id="capture" disabled class="px-5 py-2.5 font-medium bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400 disabled:cursor-not-allowed">Capture</button>
+                    <button id="stop" disabled class="px-5 py-2.5 font-medium bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:bg-gray-400 disabled:cursor-not-allowed">Stop Camera</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Camera Feed</h3>
+                        <video id="video" width="480" height="360" autoplay muted class="bg-gray-900 rounded-lg shadow-inner mx-auto block"></video>
+                    </div>
+                    <div>
+                         <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">Captured Images (<span id="count">0</span>)</h3>
+                            <button id="upload" disabled class="px-5 py-2.5 font-medium bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed">Upload Images</button>
+                         </div>
+                        <div id="thumbs" class="bg-gray-50 p-4 rounded-lg h-80 overflow-y-auto border border-gray-200 flex flex-wrap gap-2">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+<script>
+let stream=null;
+const video=document.getElementById('video');
+const startBtn=document.getElementById('start');
+const stopBtn=document.getElementById('stop');
+const captureBtn=document.getElementById('capture');
+const uploadBtn=document.getElementById('upload');
+const thumbs=document.getElementById('thumbs');
+const countEl=document.getElementById('count');
+const nameInput=document.getElementById('name');
+let images=[];
+
+// Custom alert function
+function showModal(message, isError = false) {
+    const modalBg = document.createElement('div');
+    modalBg.className = "fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50";
+    const modalContent = document.createElement('div');
+    modalContent.className = "bg-white p-8 rounded-lg shadow-xl text-center";
+    modalContent.innerHTML = `<p class="text-lg mb-6">${message}</p><button class="px-5 py-2 rounded-lg text-white ${isError ? 'bg-red-500' : 'bg-blue-500'}">OK</button>`;
+    modalBg.appendChild(modalContent);
+    document.body.appendChild(modalBg);
+    modalContent.querySelector('button').onclick = () => document.body.removeChild(modalBg);
+}
+
+startBtn.onclick = async () => {
+  const name = nameInput.value.trim();
+  if (!name) { showModal("Please enter a name before starting the camera.", true); return; }
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({video:true});
+    video.srcObject = stream;
+    startBtn.disabled = true; stopBtn.disabled = false; captureBtn.disabled=false;
+  } catch(e) {
+    showModal("Camera error: "+e, true);
+  }
+};
+stopBtn.onclick = () => {
+  if (stream) { stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  video.srcObject = null;
+  video.load(); // Clears the last frame
+  startBtn.disabled=false; stopBtn.disabled=true; captureBtn.disabled=true;
+  uploadBtn.disabled = images.length === 0;
+};
+captureBtn.onclick = () => {
+  if (!stream) return;
+
+  // Use a temporary canvas to capture the frame
+  const tempCanvas = document.createElement('canvas');
+  tempCanvas.width = video.videoWidth || 480;
+  tempCanvas.height = video.videoHeight || 360;
+  const ctx = tempCanvas.getContext('2d');
+  ctx.drawImage(video,0,0, tempCanvas.width, tempCanvas.height);
+  const dataURL = tempCanvas.toDataURL('image/jpeg', 0.9); // Send this dataURL
+
+  images.push(dataURL);
+  const img = document.createElement('img');
+  img.src = dataURL; img.className='thumb';
+  thumbs.appendChild(img);
+  countEl.innerText = images.length;
+  uploadBtn.disabled = false;
+};
+uploadBtn.onclick = async () => {
+  const name = nameInput.value.trim();
+  if (!name) { showModal("Please enter a name.", true); return; }
+  if (images.length === 0) { showModal("Please capture some images first.", true); return; }
+  uploadBtn.disabled = true;
+  uploadBtn.innerText = "Uploading...";
+  try {
+    const resp = await fetch('/api/register', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name:name, images:images})
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      showModal("Error: " + (data.message || JSON.stringify(data)), true);
+    } else if (data.status === 'ok') {
+      showModal("Saved " + data.saved_images + " images for " + name + ". Please go to 'Manage & Retrain' to update the model.");
+      images = []; thumbs.innerHTML=''; countEl.innerText=0;
+      nameInput.value = ''; // Clear the name input after successful upload
+    } else {
+      showModal("Error: " + (data.message || JSON.stringify(data)), true);
+    }
+  } catch (err) {
+    showModal("Network or server error: " + err, true);
+  } finally {
+    uploadBtn.disabled = false;
+    uploadBtn.innerText = "Upload Images";
+  }
+};
+</script>
+</body>
+</html>

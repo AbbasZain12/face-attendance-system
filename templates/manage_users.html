@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Face Attendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-800 text-white flex flex-col">
+            <div class="p-6 text-2xl font-bold border-b border-gray-700">FaceTrack</div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="/" class="flex items-center px-4 py-2 text-lg rounded-md hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Home
+                </a>
+                <a href="/register" class="flex items-center px-4 py-2 text-lg rounded-md hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+                    Register User
+                </a>
+                <a href="/attendance" class="flex items-center px-4 py-2 text-lg rounded-md hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    Mark Attendance
+                </a>
+                <a href="/manage_users" class="flex items-center px-4 py-2 text-lg rounded-md bg-gray-700 font-semibold">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    Manage & Retrain
+                </a>
+                <a href="/attendance_log" class="flex items-center px-4 py-2 text-lg rounded-md hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    Attendance Log
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8 overflow-y-auto">
+            <h1 class="text-4xl font-bold text-gray-800 mb-8">Manage Users & Retrain Model</h1>
+
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Model Training</h2>
+                <p class="text-gray-600 mb-4">After adding or deleting users, you must retrain the model to apply the changes. This process can take a few minutes.</p>
+                <button id="retrainBtn" class="px-6 py-3 font-semibold bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-wait">
+                    Retrain Model
+                </button>
+                <div id="trainStatus" class="mt-4 p-4 rounded-lg bg-gray-50 border border-gray-200 text-gray-700">
+                    Status: Idle. Click the button to start training.
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Registered Users List</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 border-b-2 border-gray-200">
+                            <tr>
+                                <th class="p-4 text-lg font-semibold text-gray-600">Name</th>
+                                <th class="p-4 text-lg font-semibold text-gray-600">Images Saved</th>
+                                <th class="p-4 text-lg font-semibold text-gray-600">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if users and users|length>0 %}
+                            {% for u in users %}
+                            <tr id="row-{{ u.name }}" class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="p-4 text-gray-800 font-medium">{{ u.name }}</td>
+                                <td class="p-4 text-gray-800">{{ u.count }}</td>
+                                <td class="p-4">
+                                    <button onclick="deleteUser('{{ u.name }}')" class="px-4 py-2 font-medium bg-red-500 text-white rounded-lg shadow-sm hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="p-4 text-center text-gray-500">No registered users found.</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+<script>
+const retrainBtn = document.getElementById('retrainBtn');
+const trainStatus = document.getElementById('trainStatus');
+
+// Custom alert/confirm modal
+function showModal(message, type = 'alert', onConfirm = () => {}) {
+    const modalBg = document.createElement('div');
+    modalBg.className = "fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50";
+    const modalContent = document.createElement('div');
+    modalContent.className = "bg-white p-8 rounded-lg shadow-xl text-center max-w-sm w-full";
+
+    let buttons = '';
+    if (type === 'confirm') {
+         buttons = `<div class="mt-6 flex justify-center gap-4"><button class="confirm-btn px-4 py-2 rounded-lg text-white bg-red-600">Confirm</button><button class="cancel-btn px-4 py-2 rounded-lg bg-gray-300">Cancel</button></div>`;
+    } else {
+         buttons = `<div class="mt-6"><button class="confirm-btn px-5 py-2 rounded-lg text-white">OK</button></div>`;
+    }
+
+    modalContent.innerHTML = `<p class="text-lg">${message}</p>${buttons}`;
+
+    if (type !== 'confirm') {
+       modalContent.querySelector('.confirm-btn').style.backgroundColor = (type === 'error') ? '#ef4444' : '#3b82f6';
+    }
+
+    modalBg.appendChild(modalContent);
+    document.body.appendChild(modalBg);
+
+    const confirmBtn = modalContent.querySelector('.confirm-btn');
+    const cancelBtn = modalContent.querySelector('.cancel-btn');
+
+    confirmBtn.onclick = () => {
+        onConfirm();
+        document.body.removeChild(modalBg);
+    };
+    if (cancelBtn) {
+        cancelBtn.onclick = () => {
+            document.body.removeChild(modalBg);
+        };
+    }
+}
+
+async function deleteUser(name) {
+    showModal(`Are you sure you want to delete user '${name}'? This will remove all their images and requires retraining the model.`, 'confirm', async () => {
+        const resp = await fetch('/api/delete_user', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({name: name})
+        });
+        const data = await resp.json();
+        if (data.status === 'ok') {
+            showModal(data.message);
+            const row = document.getElementById('row-' + name);
+            if (row) row.remove();
+        } else {
+            showModal("Error: " + (data.message || JSON.stringify(data)), 'error');
+        }
+    });
+}
+
+retrainBtn.addEventListener('click', async ()=> {
+  retrainBtn.disabled = true;
+  trainStatus.innerHTML = `<div class="flex items-center text-blue-600"><svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Starting training...</div>`;
+  const resp = await fetch('/api/retrain', {method:'POST'});
+  const data = await resp.json();
+  if (data.status === 'ok') {
+    trainStatus.innerHTML = `<div class="flex items-center text-blue-600"><svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Training started in background. Please wait.</div>`;
+    pollTrainStatus();
+  } else {
+    trainStatus.innerHTML = `<span class="text-red-600 font-bold">Error:</span> ${data.message || JSON.stringify(data)}`;
+    retrainBtn.disabled = false;
+  }
+});
+
+async function pollTrainStatus(){
+  let done=false;
+  while(!done){
+    try {
+        const r = await fetch('/api/train_status');
+        const d = await r.json();
+        if (d.running) {
+            trainStatus.innerHTML = `<div class="flex items-center text-blue-600"><svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Training is running... Please wait. This can take several minutes.</div>`;
+        } else {
+            done=true;
+            if(d.last_result) {
+                trainStatus.innerHTML = `<span class="text-green-600 font-bold">Success:</span> Training finished. The model is now up to date.`;
+            } else {
+                // Show only the summary of the error, not the full traceback
+                trainStatus.innerHTML = `<span class="text-red-600 font-bold">Failed:</span> ${d.message ? d.message.split('Traceback')[0] : 'An unknown error occurred.'}`;
+            }
+            retrainBtn.disabled = false;
+        }
+    } catch(e) {
+        done = true;
+        trainStatus.innerHTML = `<span class="text-red-600 font-bold">Error:</span> Could not get training status. The server may have restarted.`;
+        retrainBtn.disabled = false;
+    }
+    if (!done) {
+       await new Promise(res=>setTimeout(res, 2500));
+    }
+  }
+}
+</script>
+</body>
+</html>
