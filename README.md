@@ -196,8 +196,8 @@ python extract_embeddings.py
 <p align="center">
   <img src="screenshots/retrain.png" width="45%" alt="Retrain Feature">
 </p>
-## 🔮 Future Improvements
 
+## 🔮Future Improvements
 - [ ] Upgrade to **MediaPipe** or **RetinaFace** for more robust face detection
 - [ ] Add **anti-spoofing** (liveness detection) to prevent photo-based attacks
 - [ ] Integrate **SQLite database** with user login and role management
